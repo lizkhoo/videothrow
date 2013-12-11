@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cordova</title>
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8">
+   
+
+
+    function captureSuccess(mediaFiles) {
+        
+        for (var i = 0; i < mediaFiles.length;i++) {
+            uploadFile(mediaFiles[i]);
+            console.log(mediaFile);
+        }
+    }
+
+    // Called if something bad happens.
+    //
+    function captureError(error) {
+        var msg = 'An error occurred during capture: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
+
+    // A button will call this function
+    //
+    function captureVideo() {
+        // Launch device video recording application,
+        // allowing user to capture up to 2 video clips
+        navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1});
+    }
+
+    // Upload files to server
+    function uploadFile(mediaFile) {
+    	console.log("uploadFile: " + mediaFile);
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "http://ec2-54-200-31-221.us-west-2.compute.amazonaws.com:8080/upload",
+            function(result) {
+                console.log('Upload success: ' + result.responseCode);
+                console.log(result.bytesSent + ' bytes sent');
+                
+                //add redirect to return page with videos
+            },
+            function(error) {
+                console.log('Error uploading file ' + path + ': ' + error.code);
+            },
+            { file: name });
+    }
+
+    </script>
+    </head>
+    <body>
+        <button onclick="captureVideo();">Capture Video</button> <br>
+        
+    </body>
+</html>
