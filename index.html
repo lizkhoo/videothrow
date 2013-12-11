@@ -1,0 +1,61 @@
+<html>
+<head>
+<style type="text/css">
+#button {
+	background-color:#ffc477;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:0px solid #eeb44f;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:50px;
+	line-height:50px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+}#button:hover {
+	background-color:#fb9e25;
+}#button:active {
+	position:relative;
+	top:1px;
+}</style>
+
+<script type="text/javascript">
+function getFile(){
+	document.getElementById("upfile").click();
+}
+function sub(obj){
+	var file = obj.value;
+	var fileName = file.split("\\");
+	document.getElementById("button").innerHTML= fileName[fileName.length-1];
+	document.myForm.submit();
+	event.preventDefault();
+}
+</script>
+</head>
+<body>
+	<center>
+	<form action="/upload" enctype="multipart/form-data" '+ 'method="post" name="myForm">
+		<div id="button" onClick="getFile()">Upload Video</div>
+		<div style='height: 0px; width: 0px; overflow:hidden;'>
+		<input id="upfile" type="file" name="upload" multiple="multiple" onchange="sub(this)"/></div>
+		<!--<input type="submit" value="Upload!!!">-->
+	</form>
+</center>
+</body>
+</html>
